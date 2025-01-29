@@ -1,0 +1,31 @@
+# Virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Data files
+example.csv
+
+# Streamlit temporary files
+.streamlit/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Database
+*.sqlite3
+
+# Jupyter Notebook hidden directories
+.jupyter/
+
+# VSCode settings
+.vscode/
