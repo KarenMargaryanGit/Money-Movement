@@ -6,9 +6,6 @@ __pycache__/
 *.pyc
 *.pyo
 
-# Data files
-example.csv
-
 # Streamlit temporary files
 .streamlit/
 
