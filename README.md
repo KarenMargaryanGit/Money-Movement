@@ -4,15 +4,34 @@ This project provides a Streamlit application to analyze money movement data. It
 
 ## Setup Instructions
 
-### 1. Run the Setup Script
+### 1. Create and Activate a Virtual Environment
 
-To create a virtual environment and install the required dependencies, navigate to the project directory and run the following command:
+Navigate to the project directory and create a virtual environment using the following command:
 
 ```bash
-python setup.py
+python -m venv venv
 ```
 
-### 2. Run the Application
+Activate the virtual environment:
+
+- On Windows:
+  ```bash
+  .\venv\Scripts\activate
+  ```
+- On macOS and Linux:
+  ```bash
+  source venv/bin/activate
+  ```
+
+### 2. Install Dependencies
+
+To install the required dependencies, run the following command:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Run the Application
 
 To run the Streamlit application, use the following command:
 
