@@ -1,55 +1,65 @@
 import streamlit as st
+from data_loader import load_data
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-from data_loader import load_data
+from datetime import datetime
+import calendar
 from pages import *
 import sys
 import os
 
+# path = 'data/productMoneyMovementsByCurrency-20231231-20241231.csv'
+
 # Page layout
 st.set_page_config(page_title="Money Movement App", layout="wide")
 
+import streamlit as st
+
+st.header("Select Start and End Dates")
 with st.sidebar:
     st.header("Filter Options")
-    # Custom Date Range Picker
+    
+
+    st.subheader("Select Page")
+    page = st.sidebar.selectbox('', ["Top Losers", "Top Gainers", "Client Analysis"])
+    
+    
+    st.subheader("")
     st.subheader("Select Date Range")
+    
+    years = list(range(2025, 2020, -1))
+    months = list(calendar.month_name)[1:]  
 
-    # Define year range
-    years = list(range(2010, 2025))  # 2010 to 2024 inclusive
+    # Create side-by-side columns
+    col1, col2 = st.columns(2)
 
-    # Define month names
-    months = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ]
+    # Select start and end dates
+    with col1:
+        start_year = st.selectbox("Start Year", years, index=2)
+        end_year = st.selectbox("End Year", years, index=1)
 
-    # Mapping month names to numbers
-    month_mapping = {month: index for index, month in enumerate(months, start=1)}
+    with col2:
+        start_month = st.selectbox("Start Month", months, index=11)
+        end_month = st.selectbox("End Month", months, index=11)
 
-    # Select Start Year and Month
-    st.subheader("Select Start Date")
-    start_year = st.selectbox("Start Year", years, index=years.index(2010))
-    start_month = st.selectbox("Start Month", months, index=0)
+    # Convert selected values to numerical format
+    start_month_num = months.index(start_month) + 1
+    end_month_num = months.index(end_month) + 1
 
-    # Select End Year and Month
-    st.subheader("Select End Date")
-    end_year = st.selectbox("End Year", years, index=years.index(2024))
-    end_month = st.selectbox("End Month", months, index=11)
+    # Get first day of start month and last day of end month
+    start_date = datetime(start_year, start_month_num, calendar.monthrange(start_year, start_month_num)[1])
+    end_date = datetime(end_year, end_month_num, calendar.monthrange(end_year, end_month_num)[1])
 
-    # Display selected dates
-    st.markdown("## Selected Date Range")
-    st.write(f"**Start Date:** {start_month} {start_year}")
-    st.write(f"**End Date:** {end_month} {end_year}")
-
-
-    # # Ensure that start_date is before end_date
-    # if start_date > end_date:
-    #     st.error("Error: Start date must be before end date.")
-    # else:
-    #     # Print selected dates
-    #     st.write(f"**Selected Start Date:** {start_date}")
-    #     st.write(f"**Selected End Date:** {end_date}")
+    
+    # Ensure that start_date is before end_date
+    if start_date >= end_date:
+        st.error("Error: Start date must be before end date.")
+    else:
+        # Print selected dates
+        st.write(f"**Selected Start Date:** {start_date.strftime('%Y-%m-%d')}")
+        st.write(f"**Selected End Date:** {end_date.strftime('%Y-%m-%d')}")
+        path = f'data/productMoneyMovementsByCurrency-{start_date.strftime('%Y%m%d')}-{end_date.strftime('%Y%m%d')}.csv'
 
 
 # Top bar with Quit button
@@ -62,16 +72,14 @@ with col2:
 
 
 # Load data
-df = load_data()
+df = load_data(path)
 
 
 
-# Sidebar for navigation
-page = st.sidebar.selectbox("Select Page", ["Top Losers", "Top Gainers", "Client Analysis"])
 
 if page == "Top Losers":
-    show_top_losers()
+    show_top_losers(df)
 elif page == "Top Gainers":
-    show_top_gainers()
+    show_top_gainers(df)
 elif page == "Client Analysis":
-    show_client_analysis()
+    show_client_analysis(df)

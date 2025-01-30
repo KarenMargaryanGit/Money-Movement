@@ -5,8 +5,8 @@ import matplotlib.ticker as ticker
 from data_loader import load_data
 
 
-def show_top_losers():
-    df = load_data()
+def show_top_losers(df):
+    # df = load_data()
     top_losers = df.nsmallest(100, 'End Balance')
     st.header('Top 100 Losers')
     st.dataframe(top_losers)
@@ -18,8 +18,8 @@ def show_top_losers():
     ax1.set_xticklabels(tick_labels, rotation=90)
     st.pyplot(fig1)
 
-def show_top_gainers():
-    df = load_data()
+def show_top_gainers(df):
+    # df = load_data()
     top_gainers = df.nlargest(100, 'End Balance')
     st.header('Top 100 Gainers')
     st.dataframe(top_gainers)
@@ -31,8 +31,8 @@ def show_top_gainers():
     ax2.set_xticklabels(tick_labels, rotation=90)
     st.pyplot(fig2)
 
-def show_client_analysis():
-    df = load_data()
+def show_client_analysis(df):
+    # df = load_data()
 
     st.header('Client Analysis')
     
