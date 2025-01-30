@@ -14,9 +14,6 @@ import os
 # Page layout
 st.set_page_config(page_title="Money Movement App", layout="wide")
 
-import streamlit as st
-
-st.header("Select Start and End Dates")
 with st.sidebar:
     st.header("Filter Options")
     
@@ -59,7 +56,7 @@ with st.sidebar:
         # Print selected dates
         st.write(f"**Selected Start Date:** {start_date.strftime('%Y-%m-%d')}")
         st.write(f"**Selected End Date:** {end_date.strftime('%Y-%m-%d')}")
-        path = f'data/productMoneyMovementsByCurrency-{start_date.strftime('%Y%m%d')}-{end_date.strftime('%Y%m%d')}.csv'
+        path = f"data/productMoneyMovementsByCurrency-{start_date.strftime('%Y%m%d')}-{end_date.strftime('%Y%m%d')}.csv"
 
 
 # Top bar with Quit button
