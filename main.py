@@ -19,7 +19,7 @@ with st.sidebar:
     
 
     st.subheader("Select Page")
-    page = st.sidebar.selectbox('', ["Top Losers", "Top Gainers", "Client Analysis"])
+    page = st.sidebar.selectbox('', ["Waterfall Chart", "Top Losers", "Top Gainers", "Client Analysis", ])
     
     
     st.subheader("")
@@ -80,3 +80,5 @@ elif page == "Top Gainers":
     show_top_gainers(df)
 elif page == "Client Analysis":
     show_client_analysis(df)
+elif page == 'Waterfall Chart':
+    show_waterfall_chart(df)

@@ -3,6 +3,32 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 from data_loader import load_data
+import plotly.graph_objects as go
+import warnings
+
+warnings.filterwarnings("ignore", category=FutureWarning)
+
+def show_waterfall_chart(df):
+    categories = df['Category'].unique()
+    print(df['End Balance'].sum(), '--------------------------------------------------------')  
+    for category in categories:
+        category_data = df[df['Category'] == category]
+        
+        # Extracting the relevant columns for the waterfall chart
+        values = category_data[['Start Balance', 'New Client', 'Closed Clients', 'From other', 'Own Resources', 'End Balance']].sum().values
+        labels = ['Start Balance', 'New Client', 'Closed Clients', 'From other', 'Own Resources', 'End Balance']
+        
+        # Configure measures: first value as absolute, next ones as relative, and final as total
+        new_measure = ["absolute"] + ["relative"] * (len(values) - 2) + ["total"]
+
+        fig = go.Figure(go.Waterfall(
+            measure=new_measure,
+            x=labels,
+            y=values,
+            connector={"line": {"color": "rgb(63, 63, 63)"}}
+        ))
+        fig.update_layout(title=f"Waterfall Chart for {category}")
+        st.plotly_chart(fig)
 
 
 def show_top_losers(df):
@@ -65,3 +91,23 @@ def show_client_analysis(df):
         ax.set_title('Total End Balance by Category')
         plt.xticks(rotation=45)
         st.pyplot(fig)
+
+def main():
+    df = load_data()  # load data
+
+    # First row: Waterfall Chart and Top Losers
+    col1, col2 = st.columns(2)
+    with col1:
+        show_waterfall_chart(df)
+    with col2:
+        show_top_losers(df)
+
+    # Second row: Top Gainers and Client Analysis
+    col3, col4 = st.columns(2)
+    with col3:
+        show_top_gainers(df)
+    with col4:
+        show_client_analysis(df)
+
+if __name__ == "__main__":
+    main()
