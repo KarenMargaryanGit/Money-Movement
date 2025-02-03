@@ -63,8 +63,18 @@ def show_client_analysis(df):
     st.header('Client Analysis')
     
     # Filter for FCLICODE
-    fclico_options = df['FCLICODE'].unique()
-    fclico_filter = st.multiselect('Filter by FCLICODE', options=fclico_options, default=None)
+    # fclico_options = df['FCLICODE'].unique()
+    # fclico_filter = st.multiselect('Filter by FCLICODE', options=fclico_options, default=None)
+    
+    fclico_all = df['FCLICODE'].unique()
+    search_fclico = st.text_input('Search FCLICODE')
+    if search_fclico:
+        fclico_options = [code for code in fclico_all if search_fclico in str(code)]
+    else:
+        fclico_options = list(fclico_all)
+    fclico_filter = st.multiselect('Filter by FCLICODE', options=fclico_options)
+
+
     
     if fclico_filter:
         filtered_df = df[df['FCLICODE'].isin(fclico_filter)]
@@ -92,22 +102,3 @@ def show_client_analysis(df):
         plt.xticks(rotation=45)
         st.pyplot(fig)
 
-def main():
-    df = load_data()  # load data
-
-    # First row: Waterfall Chart and Top Losers
-    col1, col2 = st.columns(2)
-    with col1:
-        show_waterfall_chart(df)
-    with col2:
-        show_top_losers(df)
-
-    # Second row: Top Gainers and Client Analysis
-    col3, col4 = st.columns(2)
-    with col3:
-        show_top_gainers(df)
-    with col4:
-        show_client_analysis(df)
-
-if __name__ == "__main__":
-    main()
