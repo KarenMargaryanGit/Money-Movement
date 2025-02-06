@@ -8,9 +8,11 @@ import warnings
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 
-def show_waterfall_chart(df):
+
+
+def show_waterfall_chart(path):
+    df = load_data(path)
     categories = df['Category'].unique()
-    print(df['End Balance'].sum(), '--------------------------------------------------------')  
     for category in categories:
         category_data = df[df['Category'] == category]
         
@@ -31,8 +33,8 @@ def show_waterfall_chart(df):
         st.plotly_chart(fig)
 
 
-def show_top_losers(df):
-    # df = load_data()
+def show_top_losers(path):
+    df = load_data(path)
     top_losers = df.nsmallest(100, 'End Balance')
     st.header('Top 100 Losers')
     st.dataframe(top_losers)
@@ -44,8 +46,8 @@ def show_top_losers(df):
     ax1.set_xticklabels(tick_labels, rotation=90)
     st.pyplot(fig1)
 
-def show_top_gainers(df):
-    # df = load_data()
+def show_top_gainers(path):
+    df = load_data(path)
     top_gainers = df.nlargest(100, 'End Balance')
     st.header('Top 100 Gainers')
     st.dataframe(top_gainers)
@@ -57,8 +59,8 @@ def show_top_gainers(df):
     ax2.set_xticklabels(tick_labels, rotation=90)
     st.pyplot(fig2)
 
-def show_client_analysis(df):
-    # df = load_data()
+def show_client_analysis(path):
+    df = load_data(path)
 
     st.header('Client Analysis')
     

@@ -1,6 +1,6 @@
 import pandas as pd
 import streamlit as st
-import pyttsx3
+# import pyttsx3
 import os
 from data_maker import calculate_data
 
@@ -16,7 +16,7 @@ def load_data(file_path='example.csv'):
         df['FCLICODE'] = df['FCLICODE'].astype(str)
 
         print("Data loaded successfully.")
-        engine = pyttsx3.init()
-        engine.say("Data loaded successfully.")
-        engine.runAndWait()
+        # engine = pyttsx3.init()
+        # engine.say("Data loaded successfully.")
+        # engine.runAndWait()
     return df

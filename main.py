@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 from datetime import datetime
 import calendar
-from pages import *
-import sys
-import os
+from total_deposit_overview import show_total_deposit_overview
+from clients_flow_monitoring import show_clients_flow_monitoring
+
 
 # path = 'data/productMoneyMovementsByCurrency-20231231-20241231.csv'
 
@@ -19,7 +19,7 @@ with st.sidebar:
     
 
     st.subheader("Select Page")
-    page = st.sidebar.selectbox('', ["Waterfall Chart", "Top Losers", "Top Gainers", "Client Analysis", ])
+    page = st.sidebar.selectbox('', ["Total Deposit Overview", "Clients Flow Monitoring" ])
     
     
     st.subheader("")
@@ -59,26 +59,20 @@ with st.sidebar:
         path = f"data/productMoneyMovementsByCurrency-{start_date.strftime('%Y%m%d')}-{end_date.strftime('%Y%m%d')}.csv"
 
 
-# Top bar with Quit button
-col1, col2 = st.columns([9, 1])
-with col2:
-    if st.button("Quit"):
-        st.cache_data.clear()
-        st.stop()
-        
-
-
-# Load data
-df = load_data(path)
+       
 
 
 
 
-if page == "Top Losers":
-    show_top_losers(df)
-elif page == "Top Gainers":
-    show_top_gainers(df)
-elif page == "Client Analysis":
-    show_client_analysis(df)
-elif page == 'Waterfall Chart':
-    show_waterfall_chart(df)
+if page == "Total Deposit Overview":
+    show_total_deposit_overview(path)
+elif page == "Clients Flow Monitoring":
+    show_clients_flow_monitoring(path)
+# elif page == "Top Losers":
+#     show_top_losers(path)
+# elif page == "Top Gainers":
+#     show_top_gainers(path)
+# elif page == "Client Analysis":
+#     show_client_analysis(path)
+# elif page == 'Waterfall Chart':
+#     show_waterfall_chart(path)
